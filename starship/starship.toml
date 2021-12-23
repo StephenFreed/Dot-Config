@@ -9,7 +9,7 @@ format = " ➤ [$path]($style)[$read_only]($read_only_style) ➤ "
 
 [hostname]
 ssh_only = true
-format = "[$hostname](yellow) ➤ "
+format = "[\\[$hostname\\]](yellow) ➤ "
 
 [git_branch]
 style = "cyan"
@@ -17,17 +17,17 @@ symbol = ""
 format = "[$symbol\\(]($style)[$branch](white)[\\)]($style)➤ "
 
 [git_status]
-ahead = "[${count}](green)"
-behind = "[${count}](red)"
-diverged = "[Diverged](red)"
-staged = "[${count}](green) "
-untracked = "[${count}](red)"
-modified = "[${count}](red)"
-renamed = "[${count}(yellow)]"
-deleted = "[{count}](red)"
-conflicted = "[Conflicted](red)"
-style = "#E29257"
-format = "[$ahead$behind$diverged$staged$untracked$modified$renamed$deleted$conflicted](#E29257)"
+ahead = "| [ ${count}](green) "
+behind = "| [ ${count}](red) "
+staged = "| [ ${count}](green) "
+modified = "| [ ${count}](red) "
+untracked = "| [ ${count}](red) "
+renamed = "| [ ${count}](yellow) "
+deleted = "| [ ${count}](yellow) "
+diverged = "| [ Diverged](yellow) "
+conflicted = "| [ Conflicted](red) "
+style = "cyan"
+format = "[$ahead$behind$staged$modified$untracked$renamed$deleted$diverged$conflicted]($style)"
 
 [git_state]
 style = "#E29257"

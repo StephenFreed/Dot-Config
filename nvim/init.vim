@@ -68,8 +68,8 @@ nnoremap <leader>m <S-k>
 " line spaces
 autocmd VimEnter * nnoremap <leader>O O<Esc>
 autocmd VimEnter * nnoremap <leader>o o<Esc>
-autocmd VimEnter * nnoremap <leader>sb i<space><Esc>i
-autocmd VimEnter * nnoremap <leader>sa a<space>
+autocmd VimEnter * nnoremap <leader>s b i<space><Esc>
+autocmd VimEnter * nnoremap <leader>sa a<space><Esc>
 
 " moving lines
 autocmd VimEnter * nnoremap J :m .+1<CR>==
@@ -153,6 +153,8 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " syntax highlighting
 Plug 'jiangmiao/auto-pairs'
 Plug 'numToStr/Comment.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  } " markdown preview
+" let g:mkdp_refresh_slow = 1
 
 " completion
 Plug 'hrsh7th/nvim-cmp'
