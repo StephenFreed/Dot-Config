@@ -1,0 +1,5 @@
+.DS_Store
+/configstore
+/expressvpn
+/nvim/undodir
+/nvim/autoload

@@ -1,0 +1,37 @@
+
+add_newline = false 
+format = "$directory$hostname$git_status$git_branch$git_state"
+
+[directory]
+truncation_length = 1
+style = "cyan"
+format = " ➤ [$path]($style)[$read_only]($read_only_style) ➤ "
+
+[hostname]
+ssh_only = true
+format = "[$hostname](yellow) ➤ "
+
+[git_branch]
+style = "cyan"
+symbol = ""
+format = "[$symbol\\(]($style)[$branch](white)[\\)]($style)➤ "
+
+[git_status]
+ahead = "[${count}](green)"
+behind = "[${count}](red)"
+diverged = "[Diverged](red)"
+staged = "[${count}](green) "
+untracked = "[${count}](red)"
+modified = "[${count}](red)"
+renamed = "[${count}(yellow)]"
+deleted = "[{count}](red)"
+conflicted = "[Conflicted](red)"
+style = "#E29257"
+format = "[$ahead$behind$diverged$staged$untracked$modified$renamed$deleted$conflicted](#E29257)"
+
+[git_state]
+style = "#E29257"
+format = '[\($state( $progress_current of $progress_total)\)]($style)'
+cherry_pick = "[🍒 PICKING](bold red)"
+
+
