@@ -1,6 +1,6 @@
 
 add_newline = false 
-format = "$directory$hostname$git_status$git_branch$git_state"
+format = "$directory$hostname$git_status$git_branch$git_state$python"
 
 [directory]
 truncation_length = 1
@@ -14,7 +14,7 @@ format = "[\\[$hostname\\]](yellow) ➤ "
 [git_branch]
 style = "cyan"
 symbol = ""
-format = "[$symbol\\(]($style)[$branch](white)[\\)]($style)➤ "
+format = "[$symbol\\(]($style)[$branch](white)[\\)]($style) ➤ "
 
 [git_status]
 ahead = "| [ ${count}](green) "
@@ -34,4 +34,9 @@ style = "#E29257"
 format = '[\($state( $progress_current of $progress_total)\)]($style)'
 cherry_pick = "[🍒 PICKING](bold red)"
 
+[python]
+symbol = " "
+format = "[$symbol\\($virtualenv\\)](yellow bold) ➤ "
+pyenv_version_name = true
+detect_extensions = []
 
