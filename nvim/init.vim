@@ -311,11 +311,11 @@ nvim_tree.setup {
   },
   git = {
     enable = true,
-    ignore = false,
+    ignore = true,
     timeout = 500,
   },
   view = {
-    width = 30,
+    width = 40,
     height = 30,
     hide_root_folder = false,
     side = "left",
@@ -344,7 +344,7 @@ nvim_tree.setup {
     folders = 1,
     files = 1,
     folder_arrows = 1,
-    tree_width = 40,
+    tree_width = 30,
   },
 }
 EOF
