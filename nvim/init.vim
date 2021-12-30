@@ -68,7 +68,7 @@ nnoremap <leader>m <S-k>
 " line spaces
 autocmd VimEnter * nnoremap <leader>O O<Esc>
 autocmd VimEnter * nnoremap <leader>o o<Esc>
-autocmd VimEnter * nnoremap <leader>s b i<space><Esc>
+autocmd VimEnter * nnoremap <leader>sb i<space><Esc>
 autocmd VimEnter * nnoremap <leader>sa a<space><Esc>
 
 " moving lines
@@ -155,15 +155,20 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " syntax highlightin
 Plug 'jiangmiao/auto-pairs'
 Plug 'numToStr/Comment.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  } " markdown preview
-" let g:mkdp_refresh_slow = 1
 
 " completion
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'hrsh7th/cmp-nvim-lsp' " LSP completion
+Plug 'hrsh7th/cmp-nvim-lua' " lua completion
+Plug 'saadparwaiz1/cmp_luasnip' " snippit completion
+
+" snippets
+Plug 'L3MON4D3/LuaSnip'
+Plug 'rafamadriz/friendly-snippets'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 
 " lsp
 Plug 'neovim/nvim-lspconfig' " enable LSP
@@ -171,10 +176,6 @@ Plug 'williamboman/nvim-lsp-installer' " simple to use language server installer
 Plug 'tamago324/nlsp-settings.nvim'
 " Plug 'mfussenegger/nvim-jdtls'
 
-" snippets
-Plug 'L3MON4D3/LuaSnip'
-Plug 'rafamadriz/friendly-snippets'
-Plug 'jose-elias-alvarez/null-ls.nvim'
 
 call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -221,7 +222,7 @@ let g:startify_lists = [
 
 let g:startify_bookmarks = [
             \ { 'i': '~/.config/nvim/init.vim' },
-            \ { 'p': '~/Projects'},
+            \ { 'p': '~/Projects/DS_Store'},
             \ ]
 
 let g:startify_change_to_vcs_root = 1
@@ -326,6 +327,7 @@ nvim_tree.setup {
         { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
         { key = "h", cb = tree_cb "close_node" },
         { key = "v", cb = tree_cb "vsplit" },
+        { key = {"<2-RightMouse>", "<C-[>"}, cb = tree_cb("cd") },
       },
     },
     number = false,
@@ -346,6 +348,44 @@ nvim_tree.setup {
     folder_arrows = 1,
     tree_width = 30,
   },
+}
+EOF
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Comment.nvim "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Normal Mode
+" `gcc` - Toggles the current line using linewise comment
+" `gbc` - Toggles the current line using blockwise comment
+
+" Visual Mode
+" `gc` - Toggles the region using linewise comment
+" `gb` - Toggles the region using blockwise comment
+
+lua << EOF
+require('Comment').setup()
+EOF
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Auto Pairs "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:AutoPairsShortcutFastWrap='<C-w>'
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tree Sitter "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+  ignore_install = { "" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { "" },  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = true,
+  },
+  indent = { enable = true, disable = { "" } },
 }
 EOF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -391,45 +431,6 @@ require('telescope').setup{
 }
 EOF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Comment.nvim "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-lua << EOF
-require('Comment').setup()
-EOF
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Auto Pairs "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:AutoPairsShortcutFastWrap='<C-w>'
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Tree Sitter "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
-  ignore_install = { "" }, -- List of parsers to ignore installing
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = { "" },  -- list of language that will be disabled
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = true,
-  },
-  indent = { enable = true, disable = { "" } },
-}
-EOF
-
-" configure nvcode-color-schemes
-let g:nvcode_termcolors=256
-
-" checks if your terminal has 24-bit color support
-if (has("termguicolors"))
-    set termguicolors
-    hi LineNr ctermbg=NONE guibg=NONE
-endif
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CMP "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
@@ -445,6 +446,7 @@ end
 
 require("luasnip/loaders/from_vscode").lazy_load()
 
+-- helps super tab functionality for snippets
 local check_backspace = function()
   local col = vim.fn.col "." - 1
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
@@ -488,7 +490,7 @@ cmp.setup {
   },
   mapping = {
     ["<C-K>"] = cmp.mapping.select_prev_item(),
-		["<C-J>"] = cmp.mapping.select_next_item(),
+	["<C-J>"] = cmp.mapping.select_next_item(),
     ["<C-B>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
     ["<C-F>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -500,6 +502,7 @@ cmp.setup {
     -- Accept currently selected item. If none selected, `select` first item.
     -- Set `select` to `false` to only confirm explicitly selected items.
     ["<CR>"] = cmp.mapping.confirm { select = true },
+    -- super tab for snippets
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -537,6 +540,7 @@ cmp.setup {
       -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
       vim_item.menu = ({
         nvim_lsp = "[LSP]",
+        nvim_lua = "[Nvim Lua]",
         luasnip = "[Snippet]",
         buffer = "[Buffer]",
         path = "[Path]",
@@ -546,9 +550,10 @@ cmp.setup {
   },
   sources = {
     { name = "nvim_lsp" },
+    { name = "nvim_lua" },
     { name = "luasnip", },
     { name = "buffer", },
-    { name = "path", keyword_length = 4 },
+    { name = "path", keyword_length = 1 },
   },
   confirm_opts = {
     behavior = cmp.ConfirmBehavior.Replace,
