@@ -585,18 +585,18 @@ augroup exe_code
 
     " execute python code 
     autocmd FileType python nnoremap <buffer> <localleader>r
-            \ :10sp<CR> :terminal python3 % <CR> :startinsert<CR>
+            \ :10sp<CR> :terminal python3 %<CR> :startinsert<CR>
 
     " compile java code 
     autocmd FileType java nnoremap <buffer> <localleader>p
-            \ :10sp<CR> :terminal javac % <CR> :startinsert<CR>
+            \ :10sp<CR> :terminal javac %<CR> :startinsert<CR>
 
     " execute java code 
     autocmd FileType java nnoremap <buffer> <localleader>rr
-            \ :10sp<CR> :terminal java %:t:r <CR> :startinsert<CR>
+            \ :10sp<CR> :terminal java %:t:r<CR> :startinsert<CR>
     
     " execute JavaScript code 
     autocmd FileType javascript nnoremap <buffer> <localleader>r
-            \ :10sp<CR> :terminal % <CR> :startinsert<CR>
+            \ :10sp<CR> :terminal node %<CR> :startinsert<CR>
 
 augroup END
