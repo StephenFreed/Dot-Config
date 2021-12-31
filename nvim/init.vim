@@ -90,7 +90,9 @@ set splitbelow splitright
 nnoremap <leader>vs :vertical split<CR>
 nnoremap <leader>sp :split<CR>
 nnoremap <leader>tt :vertical split<CR> :terminal<CR>i
+nnoremap <leader>tb :10sp<CR> :terminal<CR>i
 tnoremap <Esc> <C-\><C-n> " allows normal mode in terminal to switch windows
+nnoremap <leader>l :MaximizerToggle<CR>
 
 " Make adjusting split sizes more friendly
 nnoremap <silent> <C-l> :vertical resize -3<CR>
@@ -145,6 +147,7 @@ Plug 'mhinz/vim-startify' " Startify
 Plug 'vim-airline/vim-airline' " status bar
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua' " for file tree
+Plug 'szw/vim-maximizer' " open window to full screen
 
 " ide
 Plug 'nvim-lua/plenary.nvim'
