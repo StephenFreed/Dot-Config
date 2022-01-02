@@ -72,8 +72,6 @@ autocmd VimEnter * nnoremap <leader>sb i<space><Esc>
 autocmd VimEnter * nnoremap <leader>sa a<space><Esc>
 
 " moving lines
-autocmd VimEnter * nnoremap J :m .+1<CR>==
-autocmd VimEnter * nnoremap K :m .-2<CR>==
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
@@ -317,7 +315,7 @@ nvim_tree.setup {
     timeout = 500,
   },
   view = {
-    width = 40,
+    width = 30,
     height = 30,
     hide_root_folder = false,
     side = "left",
@@ -592,7 +590,7 @@ augroup exe_code
             \ :10sp<CR> :terminal javac %<CR> :startinsert<CR>
 
     " execute java code 
-    autocmd FileType java nnoremap <buffer> <localleader>rr
+    autocmd FileType java nnoremap <buffer> <localleader>r
             \ :10sp<CR> :terminal java %:t:r<CR> :startinsert<CR>
     
     " execute JavaScript code 
