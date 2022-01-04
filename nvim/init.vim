@@ -1,6 +1,5 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax on
 set termguicolors
 set hidden
@@ -114,10 +113,15 @@ nnoremap  <leader>tf :tabfirst<CR>
 nnoremap  <leader>tl :tablast<CR>
 
 " buffers
-nnoremap  <leader>bn :bNext<CR>
+" nnoremap  <leader>bn :bNext<CR>
+" nnoremap  <leader>bp :bprevious<CR>
+nnoremap  <leader>bn :BufferLineCycleNext<CR>
+nnoremap  <leader>bp :BufferLineCyclePrev<CR>
 nnoremap  <leader>bf :bfirst<CR>
 nnoremap  <leader>bl :blast<CR>
-nnoremap  <leader>bd :bdelete<CR>
+nnoremap  <leader>bm :BufferLineMoveNext<CR>
+nnoremap  <leader>bb :BufferLineMovePrev<CR>
+nnoremap  <leader>bd :Bdelete<CR>
 
 " file tree 
 nnoremap <leader>e :NvimTreeToggle<CR>
@@ -127,8 +131,12 @@ nnoremap <leader>y :Startify<CR>
 " Find files using Telescope command-line sugar.
 nnoremap <leader>ff :Telescope find_files<cr>
 nnoremap <leader>fg :Telescope live_grep<cr>
-nnoremap <leader>fb :Telescope buffers<cr>
-nnoremap <leader>fh :Telescope help_tags<cr>
+nnoremap <leader>fj :Telescope jumplist<cr>
+
+" GitSigns
+nnoremap <leader> :GitSigns preview_hunk<cr>
+
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pluggins "
@@ -141,10 +149,10 @@ Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
 
 " layout
-Plug 'mhinz/vim-startify' " Startify
-Plug 'vim-airline/vim-airline' " status bar
+Plug 'mhinz/vim-startify' " startify
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua' " for file tree
+Plug 'vim-airline/vim-airline' " status bar
 Plug 'szw/vim-maximizer' " open window to full screen
 
 " ide
@@ -156,6 +164,10 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " syntax highlightin
 Plug 'jiangmiao/auto-pairs'
 Plug 'numToStr/Comment.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  } " markdown preview
+Plug 'lewis6991/gitsigns.nvim' " GitSigns
+Plug 'akinsho/bufferline.nvim' " BufferLine
+Plug 'moll/vim-bbye' " delete buffers without closing
+Plug 'tpope/vim-fugitive' " git fugative
 
 " completion
 Plug 'hrsh7th/nvim-cmp'
@@ -195,10 +207,142 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 " status line
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#bufferline#overwrite_variables = 1
 " hide whitespace error
 " let g:airline#extensions#whitespace#enabled = 0
 " git
-let g:airline#extensions#branch#enabled = 1
+" let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#empty_message = '~ No Git ~'
+" let g:airline_section_b = '%-0.10{getcwd()}'
+" let g:airline_section_c = '%t'
+
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.colnr = ' ㏇:'
+let g:airline_symbols.colnr = ' ℅:'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = ' ␊:'
+let g:airline_symbols.linenr = ' ␤:'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = '㏑'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = 'Ɇ'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.colnr = ' :'
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ' :'
+let g:airline_symbols.maxlinenr = '☰ '
+let g:airline_symbols.dirty='⚡changes'
+
+" " old vim-powerline symbols
+" let g:airline_left_sep = '⮀'
+" let g:airline_left_alt_sep = '⮁'
+" let g:airline_right_sep = '⮂'
+" let g:airline_right_alt_sep = '⮃'
+" let g:airline_symbols.branch = '⭠'
+" let g:airline_symbols.readonly = '⭤'
+" let g:airline_symbols.linenr = '⭡'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" BufferLine "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua <<EOF
+local status_ok, bufferline = pcall(require, "bufferline")
+if not status_ok then
+  return
+end
+
+bufferline.setup {
+  options = {
+    numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
+    -- close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
+    -- right_mouse_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
+    -- left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
+    -- middle_mouse_command = nil, -- can be a string | function, see "Mouse actions"
+    -- NOTE: this plugin is designed with this icon in mind,
+    -- and so changing this is NOT recommended, this is intended
+    -- as an escape hatch for people who cannot bear it for whatever reason
+    -- indicator_icon = "|",
+    -- buffer_close_icon = "",
+    buffer_close_icon = '',
+    -- modified_icon = "●",
+    close_icon = "",
+    -- close_icon = '',
+    left_trunc_marker = "",
+    right_trunc_marker = "",
+    --- name_formatter can be used to change the buffer's label in the bufferline.
+    --- Please note some names can/will break the
+    --- bufferline so use this at your discretion knowing that it has
+    --- some limitations that will *NOT* be fixed.
+    -- name_formatter = function(buf)  -- buf contains a "name", "path" and "bufnr"
+    --   -- remove extension from markdown files for example
+    --   if buf.name:match('%.md') then
+    --     return vim.fn.fnamemodify(buf.name, ':t:r')
+    --   end
+    -- end,
+    max_name_length = 30,
+    max_prefix_length = 30, -- prefix used when a buffer is de-duplicated
+    tab_size = 21,
+    diagnostics = false, -- | "nvim_lsp" | "coc",
+    diagnostics_update_in_insert = false,
+    -- diagnostics_indicator = function(count, level, diagnostics_dict, context)
+    --   return "("..count..")"
+    -- end,
+    -- NOTE: this will be called a lot so don't do any heavy processing here
+    -- custom_filter = function(buf_number)
+    --   -- filter out filetypes you don't want to see
+    --   if vim.bo[buf_number].filetype ~= "<i-dont-want-to-see-this>" then
+    --     return true
+    --   end
+    --   -- filter out by buffer name
+    --   if vim.fn.bufname(buf_number) ~= "<buffer-name-I-dont-want>" then
+    --     return true
+    --   end
+    --   -- filter out based on arbitrary rules
+    --   -- e.g. filter out vim wiki buffer from tabline in your work repo
+    --   if vim.fn.getcwd() == "<work-repo>" and vim.bo[buf_number].filetype ~= "wiki" then
+    --     return true
+    --   end
+    -- end,
+    offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+    show_buffer_icons = true,
+    show_buffer_close_icons = false,
+    show_close_icon = false,
+    show_tab_indicators = true,
+    persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
+    -- can also be a table containing 2 custom separators
+    -- [focused and unfocused]. eg: { '|', '|' }
+    separator_style = "slant", -- | "thick" | "thin" | { 'any', 'any' },
+    enforce_regular_tabs = true,
+    always_show_bufferline = true,
+    -- sort_by = 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' | function(buffer_a, buffer_b)
+    --   -- add custom logic
+    --   return buffer_a.modified > buffer_b.modified
+    -- end
+  },
+}
+EOF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Startify "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -400,7 +544,7 @@ require('telescope').setup{
         -- map actions.which_key to <C-h> (default: <C-/>)
         -- actions.which_key shows the mappings for your picker,
         -- e.g. git_{create, delete, ...}_branch for the git_branches picker
-        ["<C-W>"] = "which_key"
+        -- ["<C-W>"] = "which_key"
       }
     }
   },
@@ -574,6 +718,58 @@ lua << EOF
 require "lsp.lsp-installer"
 require("lsp.handlers").setup()
 require "lsp.null-ls"
+EOF
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" GitSigns "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua << EOF
+local status_ok, gitsigns = pcall(require, "gitsigns")
+if not status_ok then
+  return
+end
+gitsigns.setup {
+  signs = {
+    add = { hl = "GitSignsAdd", text = "▎", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
+    change = { hl = "GitSignsChange", text = "▎", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+    delete = { hl = "GitSignsDelete", text = "▎", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
+    topdelete = { hl = "GitSignsDelete", text = "▎", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
+    changedelete = { hl = "GitSignsChange", text = "▎", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+  },
+  signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
+  numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  watch_gitdir = {
+    interval = 1000,
+    follow_files = true,
+  },
+  attach_to_untracked = true,
+  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+    ignore_whitespace = false,
+  },
+  current_line_blame_formatter_opts = {
+    relative_time = false,
+  },
+  sign_priority = 6,
+  update_debounce = 100,
+  status_formatter = nil, -- Use default
+  max_file_length = 40000,
+  preview_config = {
+    -- Options passed to nvim_open_win
+    border = "single",
+    style = "minimal",
+    relative = "cursor",
+    row = 0,
+    col = 1,
+  },
+  yadm = {
+    enable = false,
+  },
+}
 EOF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Run Files "
