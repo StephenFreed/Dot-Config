@@ -217,7 +217,10 @@ let g:airline#extensions#bufferline#overwrite_variables = 1
 " let g:airline#extensions#whitespace#enabled = 0
 " git
 let g:airline#extensions#branch#empty_message = '~No Repository~'
-let g:airline_symbols.dirty='⚡changes'
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+let g:airline_symbols.dirty = '⚡changes'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BufferLine "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
