@@ -129,14 +129,18 @@ nnoremap <leader>y :Startify<CR>
 
 
 " Find files using Telescope command-line sugar.
-nnoremap <leader>ff :Telescope find_files<cr>
-nnoremap <leader>fg :Telescope live_grep<cr>
-nnoremap <leader>fj :Telescope jumplist<cr>
+nnoremap <leader>ff :Telescope find_files<CR>
+nnoremap <leader>fg :Telescope live_grep<CR>
+nnoremap <leader>fj :Telescope jumplist<CR>
 
 " GitSigns
-nnoremap <leader> :GitSigns preview_hunk<cr>
+nnoremap <leader>gg :Gitsigns preview_hunk<CR>
 
 
+" Fugative
+nnoremap <leader>gs :G<CR>
+nnoremap <leader>gf :diffget //2<CR>
+nnoremap <leader>gj :diffget //3<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pluggins "
