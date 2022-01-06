@@ -237,6 +237,9 @@ bufferline.setup {
     -- buffer_close_icon = "",
     -- modified_icon = "●",
     -- close_icon = '',
+    close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
+    right_mouse_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
+    -- left_mouse_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
     left_trunc_marker = "",
     right_trunc_marker = "",
     max_name_length = 30,
