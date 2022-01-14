@@ -162,6 +162,7 @@ Plug 'akinsho/bufferline.nvim' " bufferline
 Plug 'moll/vim-bbye' " delete buffers without closing
 Plug 'szw/vim-maximizer' " open window to full screen
 Plug 'akinsho/toggleterm.nvim' " floating terminal
+Plug 'lukas-reineke/indent-blankline.nvim' " line for indents
 
 " ide
 Plug 'nvim-lua/plenary.nvim'
@@ -203,6 +204,16 @@ colorscheme codedark
 " let g:gruvbox_contrast_dark='medium' 
 " colorscheme gruvbox
 " colorscheme onedark
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Indent-Blankline "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua <<EOF
+require("indent_blankline").setup {
+    -- for example, context is off by default, use this to turn it on
+    show_current_context = false,
+    show_current_context_start = false,
+}
+EOF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline Pluggin "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
