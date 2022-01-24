@@ -64,6 +64,9 @@ nnoremap <leader>ws :w<CR> :source %<CR>
 " open man page of what is under cursor
 nnoremap <leader>m <S-k>
 
+" word spelling
+nnoremap <leader>z z=
+
 " line spaces
 autocmd VimEnter * nnoremap <leader>O O<Esc>
 autocmd VimEnter * nnoremap <leader>o o<Esc>
