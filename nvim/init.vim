@@ -60,7 +60,7 @@ let maplocalleader = " "
 
 " write source %
 nnoremap <leader>ws :w<CR> :source %<CR>
-
+   
 " open man page of what is under cursor
 nnoremap <leader>m <S-k>
 
@@ -138,8 +138,8 @@ nnoremap <leader>fj :Telescope jumplist<CR>
 " GitSigns
 nnoremap <leader>gg :Gitsigns preview_hunk<CR>
 nnoremap <leader>gb :Gitsigns blame_line<CR>
-nnoremap <C-]> :Gitsigns next_hunk<CR>
-nnoremap <C-[> :Gitsigns prev_hunk<CR>
+nnoremap <leader>n :Gitsigns next_hunk<CR>
+nnoremap <leader>N :Gitsigns prev_hunk<CR>
 
 " Fugative
 nnoremap <leader>gs :G<CR>
