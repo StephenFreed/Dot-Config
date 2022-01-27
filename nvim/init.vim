@@ -392,6 +392,15 @@ EOF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Nvim-Tree "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" <C-]> will cd in the directory
+" type a to add a file. directory requires leaving a leading / at the end
+" type r to rename a file
+" type y will copy name to system clipboard
+" type Y will copy relative path to system clipboard
+" type gy will copy absolute path to system clipboard
+" type d to delete a file (will prompt for confirmation)
+" I will toggle visibility of hidden folders / Files
+" R will refresh the tree
 lua <<EOF
 vim.g.nvim_tree_icons = {
   default = "",
