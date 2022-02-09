@@ -59,7 +59,7 @@ let mapleader = " "
 let maplocalleader = " "
 
 " write source %
-nnoremap <leader>ws :w<CR> :source %<CR>
+nnoremap <leader>ws :w<CR> :silent! source %<CR>
    
 " open man page of what is under cursor
 nnoremap <leader>m <S-k>
