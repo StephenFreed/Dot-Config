@@ -59,7 +59,7 @@ let mapleader = " "
 let maplocalleader = " "
 
 " write source %
-nnoremap <leader>ws :w<CR> :silent! source %<CR>
+nnoremap <leader>ws :w<CR> :silent! source %<CR>l
    
 " open man page of what is under cursor
 nnoremap <leader>m <S-k>
@@ -187,6 +187,7 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-nvim-lsp' " lsp completion
 Plug 'hrsh7th/cmp-nvim-lua' " lua completion
 Plug 'saadparwaiz1/cmp_luasnip' " snippit completion
+Plug 'f3fora/cmp-spell' " spell completion
 
 " snippets
 Plug 'L3MON4D3/LuaSnip'
@@ -615,6 +616,10 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
 end
 
+-- -- sets spelling for spelling suggestions
+-- vim.opt.spell = true
+-- vim.opt.spelllang = { 'en_us' }
+
 --   פּ ﯟ   some other good icons
 local kind_icons = {
   Text = "",
@@ -632,6 +637,7 @@ local kind_icons = {
   Enum = "",
   Keyword = "",
   Snippet = "",
+  Spell = "S",
   Color = "",
   File = "",
   Reference = "",
@@ -702,11 +708,12 @@ cmp.setup {
       vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
       -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
       vim_item.menu = ({
-        nvim_lsp = "[LSP]",
-        nvim_lua = "[Nvim Lua]",
-        luasnip = "[Snippet]",
-        buffer = "[Buffer]",
-        path = "[Path]",
+        nvim_lsp = "LSP",
+        nvim_lua = "Nvim Lua",
+        luasnip = "Snippet",
+        buffer = "Buffer",
+        spell = "Spell",
+        path = "Path",
       })[entry.source.name]
       return vim_item
     end,
@@ -716,6 +723,7 @@ cmp.setup {
     { name = "nvim_lua" },
     { name = "luasnip", },
     { name = "buffer", },
+    { name = "spell", },
     { name = "path", keyword_length = 1 },
   },
   confirm_opts = {
