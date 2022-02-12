@@ -491,6 +491,7 @@ nvim_tree.setup {
         { key = "h", cb = tree_cb "close_node" },
         { key = "v", cb = tree_cb "vsplit" },
         { key = {"<2-RightMouse>", "<C-[>"}, cb = tree_cb("cd") },
+        { key = "Y", cb = tree_cb("copy_absolute_path") },
       },
     },
     number = false,
