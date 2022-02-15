@@ -479,7 +479,7 @@ nvim_tree.setup {
     timeout = 500,
   },
   view = {
-    width = 30,
+    width = 33,
     height = 30,
     hide_root_folder = false,
     side = "left",
@@ -808,7 +808,7 @@ augroup exe_code
 
     " execute python code 
     autocmd FileType python nnoremap <buffer> <localleader>r
-            \ :20sp<CR> :terminal python3 %<CR> :startinsert<CR>
+            \ :40sp<CR> :terminal python3 %<CR> :startinsert<CR>
 
     " compile java code 
     autocmd FileType java nnoremap <buffer> <localleader>p
