@@ -43,7 +43,7 @@ set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
 set smartindent
-set relativenumber
+" set relativenumber
 set noerrorbells
 set nu
 set nowrap
@@ -66,6 +66,15 @@ nnoremap <leader>m <S-k>
 
 " word spelling
 nnoremap <leader>z z=
+
+" set spelling
+nnoremap <leader>cs :set spell<CR>
+
+" set nospell
+nnoremap <leader>ns :set nospell<CR>
+
+" line-indent
+nnoremap <leader>cl :IndentBlanklineToggle<CR>
 
 " line spaces
 autocmd VimEnter * nnoremap <leader>O O<Esc>
@@ -212,12 +221,14 @@ colorscheme codedark
 " Indent-Blankline "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:indent_blankline_char = '┆'
+" :IndentBlankLine
 let g:indent_blankline_filetype_exclude = 'startify'
 lua <<EOF
+-- vim.opt.list = true
 require("indent_blankline").setup {
     -- for example, context is off by default, use this to turn it on
 
-    show_current_context = false,
+    show_current_context = true,
     show_current_context_start = false,
 }
 EOF
