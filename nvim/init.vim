@@ -50,6 +50,17 @@ set nowrap
 set signcolumn=yes
 set colorcolumn=80
 highlight ColorColumn ctermbg=black guibg=black
+
+lua <<EOF
+-- highlight yanked text for 200ms using the "Visual" highlight group
+vim.cmd[[
+augroup highlight_yank
+autocmd!
+au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
+augroup END
+]]
+EOF
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remaps "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -143,6 +154,7 @@ nnoremap <leader>y :Startify<CR>
 nnoremap <leader>ff :Telescope find_files<CR>
 nnoremap <leader>fg :Telescope live_grep<CR>
 nnoremap <leader>fj :Telescope jumplist<CR>
+nnoremap <leader>fh :Telescope help_tags<CR>
 
 " GitSigns
 nnoremap <leader>gg :Gitsigns preview_hunk<CR>
@@ -490,7 +502,7 @@ nvim_tree.setup {
     timeout = 500,
   },
   view = {
-    width = 33,
+    width = 43,
     height = 30,
     hide_root_folder = false,
     side = "left",
