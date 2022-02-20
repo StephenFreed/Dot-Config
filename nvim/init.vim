@@ -61,6 +61,16 @@ augroup END
 ]]
 EOF
 
+" Line Folding
+set foldcolumn=2
+" zf to fold 
+" zo to open on line
+" zc to reclose on line
+" zr to restore all
+" zm to minimize all
+" zd to delete one fold
+" zE to erase all folds
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remaps "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -226,6 +236,9 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
 colorscheme codedark
+" sets folds color
+highlight Folded guibg=#569CD6 guifg=black
+highlight FoldColumn guifg=#569CD6
 " let g:gruvbox_contrast_dark='medium' 
 " colorscheme gruvbox
 " colorscheme onedark
@@ -846,3 +859,5 @@ augroup exe_code
             \ :10sp<CR> :terminal node %<CR> :startinsert<CR>
 
 augroup END
+
+
