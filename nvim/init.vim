@@ -528,6 +528,7 @@ nvim_tree.setup {
         { key = "v", cb = tree_cb "vsplit" },
         { key = {"<2-RightMouse>", "<C-[>"}, cb = tree_cb("cd") },
         { key = "Y", cb = tree_cb("copy_absolute_path") },
+        { key = "d", cb = ":lua NvimTreeTrash()<cr>" }
       },
     },
     number = false,
@@ -549,6 +550,30 @@ nvim_tree.setup {
     tree_width = 30,
   },
 }
+
+-- deletes to trash function
+function NvimTreeTrash()
+    local lib = require('nvim-tree.lib')
+    local node = lib.get_node_at_cursor()
+    local trash_cmd = "trash "
+
+    local function get_user_input_char()
+        local c = vim.fn.getchar()
+        return vim.fn.nr2char(c)
+    end
+
+    print("Trash "..node.name.." ? y/n")
+
+    if (get_user_input_char():match('^y') and node) then
+        vim.fn.jobstart(trash_cmd .. node.absolute_path, {
+            detach = true,
+            on_exit = function (job_id, data, event) lib.refresh_tree() end,
+        })
+    end
+
+    vim.api.nvim_command('normal :esc<CR>')
+end
+
 EOF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Comment.nvim "
