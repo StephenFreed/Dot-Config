@@ -94,6 +94,10 @@ nnoremap <leader>cs :set spell<CR>
 " set nospell
 nnoremap <leader>ns :set nospell<CR>
 
+" open in browser / http & search
+vnoremap <leader>h y:!open <C-r>0<CR>
+vnoremap <leader>s y:!open http://www.google.com/search\?q=<C-r>0<CR><Esc>e
+
 " line-indent
 nnoremap <leader>cl :IndentBlanklineToggle<CR>
 
