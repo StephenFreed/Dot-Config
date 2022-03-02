@@ -873,7 +873,7 @@ augroup exe_code
 
     " execute python code 
     autocmd FileType python nnoremap <buffer> <localleader>r
-            \ :20sp<CR> :terminal python3 %<CR> :startinsert<CR>
+            \ :20sp<CR> :terminal python %<CR> :startinsert<CR>
 
     " compile java code 
     autocmd FileType java nnoremap <buffer> <localleader>p
