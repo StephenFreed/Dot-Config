@@ -14,7 +14,7 @@ format = "[\\[$hostname\\]](yellow) ➤ "
 [git_branch]
 style = "cyan"
 symbol = ""
-format = "[$symbol\\(]($style)[$branch](white)[\\)]($style) ➤ "
+format = "[$symbol\\(]($style)[$branch](red)[\\)]($style) ➤ "
 
 [git_status]
 ahead = "| [ ${count}](green) "
